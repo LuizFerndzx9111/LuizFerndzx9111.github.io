@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTV Quality RD - Mantenimiento y Performance de Buggies</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración para usar la fuente Inter y colores personalizados -->
+    <script>
+        // Configuración de Tailwind para reconocer la clase 'dark' en el elemento HTML
+        tailwind.config = {
+            darkMode: 'class', // Habilitar dark mode basado en la clase 'dark' en el <html>
+            theme: {
+                extend: {
+                    colors: {
+                        'utv-dark': '#0f172a', // Slate-900 oscuro (Background principal del dark mode)
+                        'utv-flow': '#00E5FF', // ¡EL FLOW AZUL ELÉCTRICO del logo! (Accent)
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilos personalizados para el Hero y animación de fondo */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        /* El Hero siempre mantiene un fondo oscuro para el contraste del texto */
+        .hero-bg {
+            /* Imagen de fondo actualizada con el logo subido */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('224354.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Animación para el botón de acento (Sombra en color utv-flow) */
+        .cta-button {
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px) scale(1.02);
+            /* Sombra con el nuevo color de flow */
+            box-shadow: 0 10px 15px -3px rgba(0, 229, 255, 0.5), 0 4px 6px -2px rgba(0, 229, 255, 0.2);
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+
+<!-- El body se define con los colores del modo oscuro por defecto y los colores de light mode usando el prefijo 'dark:' -->
+<body class="bg-utv-dark text-gray-100 dark:bg-gray-100 dark:text-gray-900 font-sans">
+
+    <!-- Navbar: Se ajusta el fondo para cambiar en modo claro -->
+    <header class="sticky top-0 z-50 bg-utv-dark/90 dark:bg-white/90 backdrop-blur-sm shadow-lg dark:shadow-gray-300/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo: UTV QUALITY RD (Color de flow en 'RD') -->
+                <a href="#hero" class="text-2xl font-black text-white dark:text-gray-900 flex items-center tracking-widest">
+                    <!-- Icono con el color de flow -->
+                    <svg class="w-8 h-8 mr-2 text-utv-flow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    UTV Quality <span class="text-utv-flow">RD</span>
+                </a>
+
+                <!-- Navegación Desktop -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#servicios" class="text-sm font-medium hover:text-utv-flow transition duration-150 text-gray-300 dark:text-gray-700 hover:dark:text-utv-flow">Servicios</a>
+                    <a href="#performance" class="text-sm font-medium hover:text-utv-flow transition duration-150 text-gray-300 dark:text-gray-700 hover:dark:text-utv-flow">Performance</a>
+                    <a href="#accesorios" class="text-sm font-medium hover:text-utv-flow transition duration-150 text-gray-300 dark:text-gray-700 hover:dark:text-utv-flow">Accesorios</a>
+                    <a href="#contacto" class="text-sm font-medium hover:text-utv-flow transition duration-150 text-gray-300 dark:text-gray-700 hover:dark:text-utv-flow">Contacto</a>
+                </nav>
+
+                <!-- Botones de Utilidad (Modo y Menú) -->
+                <div class="flex items-center space-x-2"> 
+                    <!-- Theme Toggle Button -->
+                    <button id="theme-toggle" class="p-2 rounded-full transition duration-300 text-utv-flow hover:bg-utv-flow/20 focus:outline-none focus:ring-2 focus:ring-utv-flow" aria-label="Cambiar Tema">
+                        <!-- Icono de Sol (Modo Claro) -->
+                        <svg id="sun-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        <!-- Icono de Luna (Modo Oscuro) -->
+                        <svg id="moon-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
+
+                    <!-- Botón Menú Móvil -->
+                    <button id="menu-button" class="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-utv-flow" aria-label="Menú">
+                        <svg class="w-6 h-6 text-utv-flow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menú Móvil Desplegable: Se ajusta el fondo para cambiar en modo claro -->
+        <div id="mobile-menu" class="hidden md:hidden absolute w-full bg-utv-dark/95 dark:bg-white/95 shadow-xl transition-all duration-300 transform scale-y-0 origin-top">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col items-center">
+                <a href="#servicios" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 dark:text-gray-700 hover:bg-gray-800 hover:text-utv-flow w-full text-center">Servicios</a>
+                <a href="#performance" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 dark:text-gray-700 hover:bg-gray-800 hover:text-utv-flow w-full text-center">Performance</a>
+                <a href="#accesorios" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 dark:text-gray-700 hover:bg-gray-800 hover:text-utv-flow w-full text-center">Accesorios</a>
+                <a href="#contacto" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 dark:text-gray-700 hover:bg-gray-800 hover:text-utv-flow w-full text-center">Contacto</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero-bg relative h-[60vh] md:h-[80vh] flex items-center justify-center text-center">
+            <div class="relative z-10 p-6 max-w-4xl">
+                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tighter text-white">
+                    <span class="text-utv-flow">UTV Quality RD:</span> EL  FLOW  QUE TU BUGGY NECESITA.
+                </h1>
+                <p class="mt-4 text-xl md:text-2xl text-gray-300 font-light">
+                    Mantenimiento Premium y Performance.   Pa' que no te quede a pie, ¡nunca!   Deje de ta' inventando.
+                </p>
+                <!-- Botón CTA con color de flow -->
+                <a href="#servicios" class="cta-button mt-8 inline-block bg-utv-flow text-utv-dark font-extrabold py-3 px-8 rounded-full text-lg uppercase shadow-2xl hover:bg-cyan-500 focus:outline-none focus:ring-4 focus:ring-utv-flow focus:ring-opacity-50">
+                    ¡VAMO' A LA CALIDAD!
+                </a>
+            </div>
+        </section>
+
+        <!-- Services Section: El fondo cambia en light mode -->
+        <section id="servicios" class="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Título con color de flow -->
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-utv-flow">NUESTROS SERVICIOS CON  TO' LOS PODERES </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Tarjeta 1: Se ajusta el fondo, el color del texto y la sombra en light mode -->
+                <div class="bg-gray-800 dark:bg-white p-6 rounded-xl shadow-2xl dark:shadow-lg border-b-4 border-utv-flow transform transition duration-500 hover:scale-[1.03]">
+                    <div class="text-utv-flow mb-4">
+                        <svg class="w-10 h-10 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.345 3.08-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-3 text-white dark:text-gray-900">MANTENIMIENTO DE FÁBRICA</h3>
+                    <p class="text-gray-400 dark:text-gray-600 text-center text-sm">
+                        Servicio   conservador y tradicional  . Hacemos el mantenimiento como dice el manual. Cambio de aceite, filtros, chequeo de tren delantero y fluidos.   ¡La base es la calidad!  
+                    </p>
+                    <ul class="mt-4 space-y-2 text-gray-300 dark:text-gray-700 text-sm">
+                        <li class="flex items-center"><span class="text-utv-flow mr-2">&check;</span> Inspección de 20 Puntos</li>
+                        <li class="flex items-center"><span class="text-utv-flow mr-2">&check;</span> Cambio de Fluidos (Motor, Transmisión, Diferencial)</li>
+                        <li class="flex items-center"><span class="text-utv-flow mr-2">&check;</span> Revisión de Correas (Belt) y Frenos</li>
+                    </ul>
+                </div>
+
+                <!-- Tarjeta 2: Se ajusta el fondo, el color del texto y la sombra en light mode -->
+                <div class="bg-gray-800 dark:bg-white p-6 rounded-xl shadow-2xl dark:shadow-lg border-b-4 border-utv-flow transform transition duration-500 hover:scale-[1.03]">
+                    <div class="text-utv-flow mb-4">
+                        <svg class="w-10 h-10 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0h4zm11 0v-2a2 2 0 00-2-2h-2a2 2 0 00-2 2v2m-6 0h6m-7-8h2m-6-4h2m-6-4h2"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-3 text-white dark:text-gray-900">UPGRADES & PERFORMANCE</h3>
+                    <p class="text-gray-400 dark:text-gray-600 text-center text-sm">
+                        ¡Pon tu buggy   a prender  !   Innovación y futuro  con piezas de alto rendimiento. Kits de turbo, escapes de flujo, y suspensiones de competencia.
+                    </p>
+                    <ul class="mt-4 space-y-2 text-gray-300 dark:text-gray-700 text-sm">
+                        <li class="flex items-center"><span class="text-utv-flow mr-2">&check;</span> Reprogramación ECU (Tuning)</li>
+                        <li class="flex items-center"><span class="text-utv-flow mr-2">&check;</span> Sistemas de Escape de Alto Rendimiento</li>
+                        <li class="flex items-center"><span class="text-utv-flow mr-2">&check;</span> Kits de Suspensión (Lift Kits y Dual Rate)</li>
+                    </ul>
+                </div>
+
+                <!-- Tarjeta 3: Se ajusta el fondo, el color del texto y la sombra en light mode -->
+                <div class="bg-gray-800 dark:bg-white p-6 rounded-xl shadow-2xl dark:shadow-lg border-b-4 border-utv-flow transform transition duration-500 hover:scale-[1.03]">
+                    <div class="text-utv-flow mb-4">
+                        <svg class="w-10 h-10 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9V3m-3 6h6m-3 6h.01"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-3 text-white dark:text-gray-900">EL  LOOK  Y LOS ACCESORIOS</h3>
+                    <p class="text-gray-400 dark:text-gray-600 text-center text-sm">
+                        Dale   el toque final   con los mejores accesorios. Para que no solo corra duro, sino que se vea   con el flow de la calle  .
+                    </p>
+                    <ul class="mt-4 space-y-2 text-gray-300 dark:text-gray-700 text-sm">
+                        <li class="flex items-center"><span class="text-utv-flow mr-2">&check;</span> Barras de Luces LED y Sistemas de Audio</li>
+                        <li class="flex items-center"><span class="text-utv-flow mr-2">&check;</span> Gomas (Llantas) y Rines de Competencia</li>
+                        <li class="flex items-center"><span class="text-utv-flow mr-2">&check;</span> Puertas, Techos, Espejos y Equipos de Seguridad</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Us / Detalle Profesional: El fondo cambia en light mode -->
+        <section id="performance" class="bg-gray-900 dark:bg-gray-200 py-16 md:py-24">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <span class="text-utv-flow text-lg font-semibold uppercase">Mentalidad de Ingeniero</span>
+                <h2 class="text-3xl md:text-5xl font-extrabold text-white dark:text-gray-900 mt-2 mb-6">
+                      CERO RODEOS:   ¿POR QUÉ UTV QUALITY RD?
+                </h2>
+                <p class="text-lg md:text-xl text-gray-400 dark:text-gray-600 max-w-3xl mx-auto">
+                    Nos enfocamos en la   ejecución profesional   y la   integridad total  . Valoramos la tradición del buen taller: cada trabajo es   real, claro y detallado  , para que el   ROL   de tu inversión en tu buggy sea máximo. ¡Aquí no se inventa!
+                </p>
+                
+                <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8">
+                    <!-- Detalle 1: Se ajusta el fondo y la sombra en light mode -->
+                    <div class="p-6 bg-utv-dark dark:bg-white rounded-xl shadow-xl dark:shadow-lg transform transition duration-300 hover:ring-2 hover:ring-utv-flow">
+                        <h3 class="text-2xl font-bold text-utv-flow">TRANSPARENCIA TOTAL</h3>
+                        <p class="mt-2 text-gray-400 dark:text-gray-600">Te decimos lo más profundo en pocas palabras  . Lo que necesita el buggy y por qué. Sin   abrevaciones   (full disclosure`).</p>
+                    </div>
+                    <!-- Detalle 2: Se ajusta el fondo y la sombra en light mode -->
+                    <div class="p-6 bg-utv-dark dark:bg-white rounded-xl shadow-xl dark:shadow-lg transform transition duration-300 hover:ring-2 hover:ring-utv-flow">
+                        <h3 class="text-2xl font-bold text-utv-flow">VISIÓN 360</h3>
+                        <p class="mt-2 text-gray-400 dark:text-gray-600">Adoptamos una   visión orientada al futuro  . Soluciones originales e innovadoras   que garantizan el rendimiento a largo plazo. Pensamos  pro .</p>
+                    </div>
+                    <!-- Detalle 3: Se ajusta el fondo y la sombra en light mode -->
+                    <div class="p-6 bg-utv-dark dark:bg-white rounded-xl shadow-xl dark:shadow-lg transform transition duration-300 hover:ring-2 hover:ring-utv-flow">
+                        <h3 class="text-2xl font-bold text-utv-flow">ACTITUD CALMADA</h3>
+                        <p class="mt-2 text-gray-400 dark:text-gray-600">Mantenemos una actitud   tranquila y relajada  . Profesionalismo al 100% y respeto en cada interacción.   No hay break  .</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contacto" class="py-16 md:py-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <!-- Título con color de flow -->
+            <h2 class="text-3xl md:text-4xl font-bold text-utv-flow mb-4">¿READY PA' SUBIR DE NIVEL?</h2>
+            <p class="text-xl text-gray-300 dark:text-gray-700 mb-8">
+                Ponte en contacto con nosotros hoy. Dale a tu buggy la calidad que se merece.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                
+                <!-- Botón de WhatsApp (SIN ICONO) -->
+                <a href="https://wa.me/18094444944" target="_blank" class="flex items-center justify-center cta-button bg-green-600 text-white font-extrabold py-3 px-8 rounded-full shadow-lg hover:bg-green-500 transition duration-300">
+                    Escríbenos por WhatsApp
+                </a>
+
+                <!-- Botón de Instagram -->
+                <a href="https://instagram.com/utvqualityrd" target="_blank" class="flex items-center justify-center cta-button bg-pink-600 text-white font-extrabold py-3 px-8 rounded-full shadow-lg hover:bg-pink-500 transition duration-300">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.772 1.667 4.92 4.92.058 1.267.069 1.647.069 4.849 0 3.203-.012 3.583-.069 4.849-.149 3.252-1.667 4.771-4.92 4.919-1.266.058-1.646.069-4.849.069-3.204 0-3.584-.012-4.85-.069-3.252-.148-4.771-1.667-4.92-4.919-.058-1.266-.069-1.646-.069-4.849 0-3.204.012-3.584.069-4.849.149-3.251 1.667-4.77 4.92-4.919 1.267-.058 1.647-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.209-6.78 2.631-6.989 6.989-.058 1.281-.072 1.689-.072 4.947 0 3.259.014 3.668.072 4.948.209 4.358 2.631 6.78 6.989 6.988 1.28.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.947-.072 4.358-.209 6.78-2.631 6.989-6.988.058-1.281.072-1.689.072-4.947 0-3.259-.014-3.668-.072-4.948-.209-4.358-2.631-6.78-6.989-6.989-1.279-.058-1.687-.072-4.947-.072zM12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm6.5-7.5a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5z"></path></svg>
+                    Síguenos en Instagram
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer: El fondo cambia en light mode -->
+    <footer class="bg-gray-900 dark:bg-gray-200 border-t border-utv-flow/50 mt-10">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <div class="text-center text-gray-500 dark:text-gray-600 text-sm">
+                &copy; 2025 UTV Quality RD. Todos los derechos reservados. | Desarrollado por  Jean Almonte  .
+            </div>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="#servicios" class="text-gray-400 dark:text-gray-700 hover:text-utv-flow">Servicios</a>
+                <a href="#performance" class="text-gray-400 dark:text-gray-700 hover:text-utv-flow">Performance</a>
+                <a href="#contacto" class="text-gray-400 dark:text-gray-700 hover:text-utv-flow">Contacto</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Menu and Theme Toggle -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const links = mobileMenu.querySelectorAll('a');
+            
+            // --- Lógica del Modo Oscuro/Claro (Dark/Light Mode) ---
+            const html = document.documentElement;
+            const themeToggle = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
+
+            // Función para aplicar la clase 'dark' y mostrar el icono correcto
+            function applyTheme(isDark) {
+                if (isDark) {
+                    html.classList.add('dark');
+                    // En modo oscuro, se ve la luna (dark mode) y se ofrece cambiar al sol (light mode)
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    html.classList.remove('dark');
+                    // En modo claro, se ve el sol (light mode) y se ofrece cambiar a la luna (dark mode)
+                    moonIcon.classList.remove('hidden');
+                    sunIcon.classList.add('hidden');
+                    localStorage.setItem('theme', 'light');
+                }
+            }
+
+            // Chequeo inicial: Prefiere lo guardado en localStorage o el setting del sistema
+            const storedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+                applyTheme(true);
+            } else {
+                applyTheme(false);
+            }
+            
+            // Listener para el botón de toggle
+            themeToggle.addEventListener('click', () => {
+                const isDark = html.classList.contains('dark');
+                applyTheme(!isDark); // Cambia al tema opuesto
+            });
+
+
+            // --- Lógica del Menú Móvil ---
+
+            // Toggle Mobile Menu
+            menuButton.addEventListener('click', () => {
+                const isExpanded = mobileMenu.classList.contains('scale-y-100');
+                if (isExpanded) {
+                    mobileMenu.classList.remove('scale-y-100');
+                    mobileMenu.classList.add('scale-y-0');
+                    setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+                } else {
+                    mobileMenu.classList.remove('hidden');
+                    setTimeout(() => {
+                        mobileMenu.classList.remove('scale-y-0');
+                        mobileMenu.classList.add('scale-y-100');
+                    }, 10);
+                }
+            });
+
+            // Close menu on link click
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('scale-y-100');
+                    mobileMenu.classList.add('scale-y-0');
+                    setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
+
+t>
+</body>
+</html>
+
